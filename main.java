@@ -1,40 +1,48 @@
-import java.util.concurrent.*;
-
 public class main
 {
-    public static void main(String[] args)
+    public static void main(String[] args) 
     {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-
         long startTime = System.nanoTime();
+ 
+        Thread[] threads = new Thread[1];
+        long[] threadTotals = new long[1];
+ 
+        for (int x = 0; x < threads.length; x++)
+        {
+            int threadIndex = x;
+            threads[x] = new Thread(() -> {
+                long sum = 0;
+                //Sum
+                for (int y = 1; y <= 1_000_000_000; y++)
+                {
+                    sum += y;
+                }
+                threadTotals[threadIndex] = sum;
+            });
+            threads[x].start();
+        }
 
-        Callable<Integer> task = () -> {
-            int count = 0;
-            for (int x = 1; x <= 1_000_000_000; x++) 
+
+        for (int x = 0; x < threads.length; x++)
+        {
+            try 
             {
-                count++;
+                threads[x].join(); 
+            } catch (InterruptedException e) 
+            {
+                e.printStackTrace();
             }
-            return count;
-        };
-
-        Future<Integer> future = executor.submit(task);
-
-        int total = 0;
-        try
-        {
-            total = future.get();
         }
-        catch (InterruptedException | ExecutionException e)
+
+        long total = 0;
+        for (int x = 0; x < threadTotals.length; x++)
         {
-            e.printStackTrace();
+            total += threadTotals[x];
         }
-        
+
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
-        System.out.println("Duration: " + duration + " ns");
         System.out.println("Total: " + total);
-        executor.shutdown();
+        System.out.println("Duration: " + duration + " ns");
     }
-
-    
 }
