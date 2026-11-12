@@ -12,7 +12,6 @@ public class main
             int threadIndex = x;
             threads[x] = new Thread(() -> {
                 long sum = 0;
-                //Sum
                 for (int y = 1; y <= 1_000_000_000; y++)
                 {
                     sum++;
