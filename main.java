@@ -4,7 +4,7 @@ public class main
 {
     public static void main(String[] args)
     {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
+        ExecutorService executor = Executors.newFixedThreadPool(100);
 
         long startTime = System.nanoTime();
 
