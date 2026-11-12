@@ -2,6 +2,8 @@ public class main
 {
     public static void main(String[] args) 
     {
+        ExecutorService executor = Executors.newFixedThreadPool(100);
+
         long startTime = System.nanoTime();
  
         Thread[] threads = new Thread[1];
