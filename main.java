@@ -15,7 +15,7 @@ public class main
                 //Sum
                 for (int y = 1; y <= 1_000_000_000; y++)
                 {
-                    sum += y;
+                    sum++;
                 }
                 threadTotals[threadIndex] = sum;
             });
